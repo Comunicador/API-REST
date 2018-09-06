@@ -780,3 +780,152 @@ Si la operación de eliminación es realizada con éxito, se retornará status 2
          16HwXg46H9WevfnWjre2F2
          { short_name: 'ventas', name: 'Ventas', description: 'Grupo de Ventas', members: {
          total: 0, pending: 0, confirmed: 0} }
+         
+          
+# Obtiene el Listado de Contactos que Pertenecen a un Grupo
+GET /groups/:short_name/contacts
+
+Esta operación obtendrá el listado de contactos que pertenece al grupo identificado por el parámetro :short_name
+
+-----> Solicitud PlaceHolders
+
+Parámetros :short_name | Tipo: Texto | Descripción: El nombre corto asignado al grupo
+
+Parámetros: limit
+Tipo: Númerico (Opcional)
+Descripción: Límite de registros a retornar en la consulta. Valor por defecto: 50. Valor máximo: 1000.
+
+Parámetros: Start
+Tipo: Númerico (Opcional)
+Descripción: Parámetro de corrimiento para la cuenta de registros a retornar en la consulta. El valor inicial es cero.
+
+Parámetros: Status
+Tipo: Texto (Opcional)
+Descripción: Filtro para el estado en el que se encuentran los contactos. Posible valores: SUSCRIBED, CONFIRMED, CANCELLED, INVITED. Valor por defecto: SUSCRIBED, CONFIRMED.
+
+Parámetros: shortResults
+Tipo: Booleano (Opcional)
+Descripción: Si esta opción es verdadera el retorno de la llamada contendrá una versión resumida de los contactos. Esta versión sólo contiene el teléfono y nombre, dejando fuera los demás campos. Posibles valores: 1 o 0. Valor por defecto: 0.
+
+-----> Respuesta
+
+La consulta retornará un arreglo de objetos de tipo contacto. Si el grupo no tiene
+contactos asociados, se retornará un arreglo vacío.
+
+# Ejemplo de solicitud
+
+-----> Utilizando HTTP:
+
+         GET /api/rest/groups/ventas/contacts HTTP/1.1
+         Accept-Encoding: identity
+         Content-Length: 0
+         Connection: close
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Content-Type: application/x-www-form-urlencoded
+
+-----> Utilizando SDK JAVA:
+
+         String shortName = "ventas";
+         Integer start = 0;
+         Integer limit = 10;
+         Groups instance = new Groups(
+         "api key",
+         "api secret",
+         "http://apps01-tigo-csms.im.local:8101/");
+
+         ApiResponse<List<ContactJsonObject>>result=
+         instance.getContactList(shortName, start, limit);
+         if (result.isOk()) {
+         List<ContactJsonObject> list = result.getResponse();
+         } else {
+         System.out.print("http code: " + result.getHttpCode());
+         System.out.print("api code: " + result.getErrorCode());
+         System.out.print("description: " + result.getErrorDescription());
+         }
+
+-----> Respuesta Utilizando HTTP:
+
+         HTTP/1.1 200 OK
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Connection: Keep-Alive
+         Transfer-Encoding: chunked
+         Content-Type: application/json
+
+-----> Respuesta Utilizando SDK JAVA:
+
+         Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
+         16HwXg46H9WevfnWjre2F2
+         [{"msisdn":"50212345678","status":"SUSCRIBED","tags":
+         [""],"phone_number":"12345678","country_code":"502","first_name":"Jose","last_na
+         me":"Perez","full_name":"JosePerez","added_from":"WEB_FORM","custom_field_1":
+         "Guatemala","custom_field_2":"","custom_field_3":"","custom_f
+         ield_4":"","custom_field_5":""}]
+
+
+# Obtiene el Listado de Contactos que No Pertenece al Grupo
+GET /groups/:short_name/available_contacts
+
+Esta operación obtiene el listado de contactos que no pertenecen al grupo: short_name
+
+-----> Solicitud Placeholders
+
+Parámetros :short_name | Tipo:  Texto | Descripción: El nombre corto asignado al grupo
+
+-----> Respuesta
+
+La consulta retornará un arreglo de objetos de tipo contacto. Si el grupo no tiene
+contactos disponibles, se retornará un arreglo vacío.
+
+# Ejemplo de solicitud
+
+-----> Utilizando HTTP:
+
+         GET /api/rest/grupos/ventas/available_contacts HTTP/1.1
+         Accept-Encoding: identity
+         Content-Length: 0
+         Connection: close
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Content-Type: application/x-www-form-urlencoded
+         
+-----> Utilizando SDK JAVA:
+
+         String shortName = "ventas";
+         Integer start = 0;
+         Integer limit = 10;
+         Groups instance = new Groups(
+         "api key",
+         "api secret",
+         "http://apps01-tigo-csms.im.local:8101/");
+         A p i R e s p o n s e < L i s t < C o n t a c t J s o n O b j e c t > > r e s u l t =
+         instance.getAvailableContactList(shortName, start, limit);
+         if (result.isOk()) {
+         List<ContactJsonObject> list = result.getResponse();
+         } else {
+         System.out.print("http code: " + result.getHttpCode());
+         System.out.print("api code: " + result.getErrorCode());
+         System.out.print("description: " + result.getErrorDescription());
+         }
+         
+-----> Respuesta Utilizando HTTP:
+
+         HTTP/1.1 200 OK
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Connection: Keep-Alive
+         Transfer-Encoding: chunked
+         Content-Type: application/json
+
+-----> Utilizando SDK JAVA:
+
+         Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
+         16HwXg46H9WevfnWjre2F2
+         [{"msisdn":"50212345678","status":"SUSCRIBED","tags":
+         [""],"phone_number":"12345678","country_code":"502","first_name":"Jose","last_na
+         me":"Perez","full_name":"JosePerez","added_from":"WEB_FORM","custom_field_1":
+         "Guatemala","custom_field_2":"","custom_field_3":"","custom_f
+         ield_4":"","custom_field_5":""}]
+         
+# Agrega un Contacto a un Grupo
+POST /groups/:short_name/contacts/:msisdn
+
+Esta operación agrega el contacto identificado con el parámetro :msisdn al grupo identificado con el parámetro :short_name
+
