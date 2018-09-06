@@ -657,3 +657,130 @@ Parámetros : short_name  | Tipo : Texto | Descripción: El nombre corto asignad
          16HwXg46H9WevfnWjre2F2
          { short_name: 'ventas', name: 'Ventas', description: 'Grupo de Ventas', members: {
          total: 0, pending: 0, confirmed: 0} }
+         
+
+# Actualiza Un Grupo
+
+PUT /groups/:short_name
+Esta operación actualiza los datos de un grupo existente. El grupo se identifica con el
+nombre corto: short_name
+
+-----> Solicitud
+
+Parámetros :short_name | Tipo: Texto | Descripción: El nombre corto asignado al grupo
+
+-----> Post-Data
+
+Se debe enviar el JSON correspondiente a un objeto de tipo grupo.
+
+-----> Respuesta
+
+Si la operación de actualización es finalizada con éxito, se retornará status 200 OK y el JSON del objeto tipo grupo. En caso contrario se responderá con status de error.
+
+# Ejemplo de solicitud
+
+-----> Utilizando HTTP:
+
+         PUT /api/rest/groups/ventas HTTP/1.1
+         Accept-Encoding: identity
+         Content-Length: 220
+         Connection: close
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Content-Type: application/x-www-form-urlencoded
+
+-----> Utilizando SDK JAVA:
+
+         String shortName = "ventas";
+         String name = "Ventas";
+         String description = "Grupo de Ventas";
+         String newShortName = "ventas";
+         Groups instance = new Groups(
+         "api key",
+         "api secret",
+         "http://apps01-tigo-csms.im.local:8101/");
+         ApiResponse<GroupJsonObject> result = instance.update(shortName, name,
+         description, newShortName);
+         if (result.isOk()) {
+         GroupJsonObject group = result.getResponse();
+         } else {
+         System.out.print("http code: " + result.getHttpCode());
+         System.out.print("api code: " + result.getErrorCode());
+         System.out.print("description: " + result.getErrorDescription());} 
+
+-----> Respuesta
+
+-----> Utilizando HTTP:
+
+         HTTP/1.1 200 OK
+         Parámetros Tipo Descripción
+         :short_name Texto El nombre corto asignado al grupo
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Connection: Keep-Alive
+         Transfer-Encoding: chunked
+         Content-Type: application/json
+
+-----> Utilizando SDK JAVA:
+
+         Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
+         16HwXg46H9WevfnWjre2F2
+         { short_name: 'ventas', name: 'Ventas', description: 'Grupo de Ventas', members: {
+         total: 0, pending: 0, confirmed: 0} }
+         
+# Elimina un Grupo
+DELETE /groups/:short_name
+
+Esta operación da de baja un grupo existente. El grupo se identifica con el nombre corto: short_name
+
+-----> Solicitud
+
+Parámetros :short_name | Tipo: Texto | Descripción: El nombre corto asignado al grupo
+
+-----> Respuesta
+
+Si la operación de eliminación es realizada con éxito, se retornará status 200 OK y el JSON del objeto tipo grupo. En caso contrario se responderá un status de error.
+
+# Ejemplo de solicitud
+
+-----> Utilizando HTTP:
+
+         DELETE /api/rest/groups/ventas HTTP/1.1
+         Accept-Encoding: identity
+         Content-Length: 0
+         Connection: close
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Content-Type: application/x-www-form-urlencoded
+
+-----> Utilizando SKD JAVA:
+
+         String shortName = "ventas";
+         Groups instance = new Groups(
+         "api key",
+         "api secret",
+         "http://apps01-tigo-csms.im.local:8101/");
+         ApiResponse<GroupJsonObject> result = instance.delete(shortName);
+         if (result.isOk()) {
+         GroupJsonObject group = result.getResponse();
+         } else {
+         System.out.print("http code: " + result.getHttpCode());
+         System.out.print("api code: " + result.getErrorCode());
+         System.out.print("description: " + result.getErrorDescription());
+         }
+
+-----> Respuesta
+
+-----> Utilizando HTTP:
+
+         HTTP/1.1 200 OK
+         Parámetros Tipo Descripción
+         :short_name Texto El nombre corto asignado al grupo
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Connection: Keep-Alive
+         Transfer-Encoding: chunked
+         Content-Type: application/json
+
+-----> Utilizando SDK JAVA:
+
+         Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
+         16HwXg46H9WevfnWjre2F2
+         { short_name: 'ventas', name: 'Ventas', description: 'Grupo de Ventas', members: {
+         total: 0, pending: 0, confirmed: 0} }
