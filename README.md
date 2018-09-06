@@ -121,7 +121,7 @@ Descripción: Filtro para el estado en el que se encuentran los contactos. Posib
 Parámetros: Booleano (Opcional) | Tipo: Texto (Opcional)
 Descripción: Si esta opción es verdadera el retorno de la llamada contendrá una versión resumida de los contactos. Esta versión sólo contiene el teléfono y nombre, dejando fuera los demás campos. Posibles valores: 1 o 0. Valor por defecto: 0.
 
-Respuesta
+----->  Respuesta
 La consulta retornará un listado de objetos tipo “contactos”. Si no existieran resultados
 para los criterios especificados, se retornará una lista vacía.
 
@@ -158,8 +158,7 @@ para los criterios especificados, se retornará una lista vacía.
 
 ----->  Respuesta
 
-Utilizando HTTP:
-
+    Utilizando HTTP:
     HTTP/1.1 200 OK
     Date: Thu, 07 Aug 2014 20:47:07 GMT
     Connection: Keep-Alive
