@@ -122,6 +122,7 @@ Parámetros: Booleano (Opcional) | Tipo: Texto (Opcional)
 Descripción: Si esta opción es verdadera el retorno de la llamada contendrá una versión resumida de los contactos. Esta versión sólo contiene el teléfono y nombre, dejando fuera los demás campos. Posibles valores: 1 o 0. Valor por defecto: 0.
 
 ----->  Respuesta
+
 La consulta retornará un listado de objetos tipo “contactos”. Si no existieran resultados
 para los criterios especificados, se retornará una lista vacía.
 
@@ -178,10 +179,12 @@ Esta operación se utiliza para obtener directamente un contacto en base al MSIS
 (Número de teléfono con código internacional de país).
 
 ----->  Solicitud
+
 Parámetros :msisdn | Tipo: Numérico | Descripción: Número de teléfono en formato internacional.
 Incluye el código de país (Ejemplo: 502123435678)
 
 ----->  Respuesta
+
 De existir un contacto con el número de teléfono enviado, la consulta retornará un
 objeto de tipo “contacto”. Si no existiera resultado para el contacto enviado se
 retornará un código de error.
@@ -237,13 +240,16 @@ POST/contacts/:msisdn
 Esta operación se utiliza para crear un contacto nuevo.
 
 ----->  Solicitud
+
 Parámetros :msisdn | Tipo: Numérico | Descripción: Número de teléfono en formato internacional.
 Incluye el código de país (Ejemplo:502123435678)
 
 ----->  Post-Data
+
 Se debe enviar el JSON correspondiente a un objeto de tipo contacto.
 
 ----->  Respuesta
+
 Si la operación de agregar el contacto se realiza con éxito, se retornará status 200 OK y
 el JSON del objeto tipo contacto. En caso contrario se responderá un status de error.
 
