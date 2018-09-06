@@ -40,12 +40,19 @@ tipo POST o PUT también se deberá concatenar el contenido del cuerpo de la
 solicitud, tal y como van a ser enviados. Ejemplo: limit=10 start=0 {"data":"del
 post"}
 3. Generar una cadena con la fecha utilizado para el efecto el estándar para el
-protocolo HTTP, con formato RFC 1123. Ejemplo: Thu, 12 Jul 2014 19:55:55 GMT
+protocolo HTTP, con formato RFC 1123. 
+
+    Ejemplo: Thu, 12 Jul 2014 19:55:55 GMT
+
 4. Concatenar el API Key, la fecha y los parámetros generados del paso 2, de manera
-que la estructura resultante quede de la siguiente forma: <API
-Key><fecha><parámetros>.
-5. Ejemplo: 1d4e705080edec039fe580dd26fd0027Thu, 12 Jul 2014 19:55:55
-GMTlimit=10start=0{"data":"del post"}
+que la estructura resultante quede de la siguiente forma: 
+
+    <API Key><fecha><parámetros>.
+
+5. Ejemplo
+
+         1d4e705080edec039fe580dd26fd0027Thu, 12 Jul 2014 19:55:55 GMTlimit=10start=0{"data":"del post"}
+
 6. Cifrar esta cadena utilizando el algoritmo de encriptación HMAC-SHA1. La base
 para el cifrado será el API Secret.
 7. El cifrado binario resultante, debe ser convertido a una cadena BASE64. Esta
