@@ -766,9 +766,7 @@ Si la operación de eliminación es realizada con éxito, se retornará status 2
          System.out.print("description: " + result.getErrorDescription());
          }
 
------> Respuesta
-
------> Utilizando HTTP:
+-----> Respuesta Utilizando HTTP:
 
          HTTP/1.1 200 OK
          Parámetros Tipo Descripción
@@ -778,7 +776,7 @@ Si la operación de eliminación es realizada con éxito, se retornará status 2
          Transfer-Encoding: chunked
          Content-Type: application/json
 
------> Utilizando SDK JAVA:
+-----> Respuesta Utilizando SDK JAVA:
 
          Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
          16HwXg46H9WevfnWjre2F2
