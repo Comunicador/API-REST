@@ -40,14 +40,10 @@ tipo POST o PUT también se deberá concatenar el contenido del cuerpo de la
 solicitud, tal y como van a ser enviados. Ejemplo: limit=10 start=0 {"data":"del
 post"}
 3. Generar una cadena con la fecha utilizado para el efecto el estándar para el
-protocolo HTTP, con formato RFC 1123. 
-
-    Ejemplo: Thu, 12 Jul 2014 19:55:55 GMT
+protocolo HTTP, con formato RFC 1123. Ejemplo: Thu, 12 Jul 2014 19:55:55 GMT
 
 4. Concatenar el API Key, la fecha y los parámetros generados del paso 2, de manera
-que la estructura resultante quede de la siguiente forma: 
-
-    <API Key><fecha><parámetros>.
+que la estructura resultante quede de la siguiente forma: <API Key><fecha><parámetros>.
 
 5. Ejemplo
 
@@ -70,8 +66,9 @@ Key>:<firma>
   
 Nota: La fecha debe ser la misma fecha utilizada en la generación de la firma.
 El encabezado final de HTTP se verá de la siguiente manera:
-Date: Thu, 12 Jul 2014 19:55:55 GMT
-Authorization: IM1D4E705080EDEC039FE580DD26FD0027:WM/16HWXG46H9WEVFNWJRE2F2
+
+        Date: Thu, 12 Jul 2014 19:55:55 GMT
+        Authorization: IM1D4E705080EDEC039FE580DD26FD0027:WM/16HWXG46H9WEVFNWJRE2F2
 
 # Manejo de Errores
 Todas las solicitudes efectuadas a la plataforma retornan un código de estado como
@@ -108,7 +105,7 @@ Esta operación se utiliza para obtener el listado de contactos asociados a la c
 desea listar los contactos asociados a un grupo deberá referirse a las operaciones de
 grupo.
 
-    # Solicitud
+# Solicitud
 Parámetros: limit | Tipo: Numérico (Opcional)
 Descripción: Límite de registros a retornar en la consulta. Valor por defecto: 50. Valor máximo: 1000.
 
@@ -124,11 +121,11 @@ Descripción: Filtro para el estado en el que se encuentran los contactos. Posib
 Parámetros: Booleano (Opcional) | Tipo: Texto (Opcional)
 Descripción: Si esta opción es verdadera el retorno de la llamada contendrá una versión resumida de los contactos. Esta versión sólo contiene el teléfono y nombre, dejando fuera los demás campos. Posibles valores: 1 o 0. Valor por defecto: 0.
 
-    # Respuesta
+# Respuesta
 La consulta retornará un listado de objetos tipo “contactos”. Si no existieran resultados
 para los criterios especificados, se retornará una lista vacía.
 
-    # Ejemplo de solicitud
+# Ejemplo de solicitud
 
 Utilizando HTTP:
 GET /api/rest/contacts?query=jose&limit=10 HTTP/1.1
@@ -159,24 +156,24 @@ System.out.print("api code: " + result.getErrorCode());
 System.out.print("description: " + result.getErrorDescription());
 }
 
-    # Respuesta
+# Respuesta
 
 Utilizando HTTP:
 
-HTTP/1.1 200 OK
-Date: Thu, 07 Aug 2014 20:47:07 GMT
-Connection: Keep-Alive
-Transfer-Encoding: chunked
-Content-Type: application/json
+    HTTP/1.1 200 OK
+    Date: Thu, 07 Aug 2014 20:47:07 GMT
+    Connection: Keep-Alive
+    Transfer-Encoding: chunked
+    Content-Type: application/json
 
-Utilizando JAVA:
-[{"msisdn":"50212345678","status":"SUSCRIBED","tags":
-[""],"phone_number":"12345678","country_code":"502","first_name":"Jose","last_na
-me":"Perez","full_name":"Joseperez","added_from":"WEB_FORM","custom_field_1":
-"Guatemala","custom_field_2":"","custom_field_3":"","custom_field_4":"","custom_f
-ield_5":""}]
+    Utilizando JAVA:
+    [{"msisdn":"50212345678","status":"SUSCRIBED","tags":
+    [""],"phone_number":"12345678","country_code":"502","first_name":"Jose","last_na
+    me":"Perez","full_name":"Joseperez","added_from":"WEB_FORM","custom_field_1":
+    "Guatemala","custom_field_2":"","custom_field_3":"","custom_field_4":"","custom_f
+    ield_5":""}]
 
-    # Obtener Un Contacto Con El MSIDSN
+# Obtener Un Contacto Con El MSIDSN
 GET /contacts/:msisdn
 Esta operación se utiliza para obtener directamente un contacto en base al MSISDN
 (Número de teléfono con código internacional de país).
@@ -185,109 +182,114 @@ SOLICITUD
 Parámetros :msisdn | Tipo: Numérico | Descripción: Número de teléfono en formato internacional.
 Incluye el código de país (Ejemplo: 502123435678)
 
-    #  RESPUESTA
+# Respuesta
 De existir un contacto con el número de teléfono enviado, la consulta retornará un
 objeto de tipo “contacto”. Si no existiera resultado para el contacto enviado se
 retornará un código de error.
 
-    # Ejemplo de solicitud Utilizando HTTP:
-GET /api/rest/contacts/50212345678 HTTP/1.1
-Accept-Encoding: identity
-Content-Length: 0
-Connection: close
-Date: Thu, 07 Aug 2014 20:47:07 GMT
-Content-Type: application/x-www-form-urlencoded
-Authorization: IM1d4e705080edec039fe580dd26fd0027:WM/16HwXg46H9WevfnWjre2F2
+# Ejemplo de solicitud Utilizando HTTP:
 
-Utilizando el SDK Java:
-String msisdn = "50212345678";
-Contacts instance = new Contacts(
-"api key",
-"api secret",
-"http://apps01-tigo-csms.im.local:8101/");
-ApiResponse result = instance.getByMsisdn(msisdn);
-if (result.isOk()) {
-ContactJsonObject contact = result.getResponse();
-} else {
-System.out.print("http code: " + result.getHttpCode());
-System.out.print("api code: " + result.getErrorCode());
-System.out.print("description: " + result.getErrorDescription());
-}
+        GET /api/rest/contacts/50212345678 HTTP/1.1
+        Accept-Encoding: identity
+        Content-Length: 0
+        Connection: close
+        Date: Thu, 07 Aug 2014 20:47:07 GMT
+        Content-Type: application/x-www-form-urlencoded
+        Authorization: IM1d4e705080edec039fe580dd26fd0027:WM/16HwXg46H9WevfnWjre2F2
 
-    # Respuesta
+        Utilizando el SDK Java:
+        String msisdn = "50212345678";
+        Contacts instance = new Contacts(
+        "api key",
+        "api secret",
+        "http://apps01-tigo-csms.im.local:8101/");
+        ApiResponse result = instance.getByMsisdn(msisdn);
+        if (result.isOk()) {
+        ContactJsonObject contact = result.getResponse();
+        } else {
+        System.out.print("http code: " + result.getHttpCode());
+        System.out.print("api code: " + result.getErrorCode());
+        System.out.print("description: " + result.getErrorDescription());
+        }
 
-Parámetros Tipo Descripción
-:msisdn Numérico Número de teléfono en formato internacional.
-Incluye el código de país ( Ejemplo:502123435678)
-Utilizando HTTP:
-HTTP/1.1 200 OK
-Date: Thu, 07 Aug 2014 20:47:07 GMT
-Connection: Keep-Alive
-Transfer-Encoding: chunked
-Content-Type: application/json
-Utilizando el SDK Java:
-{"msisdn":"50212345678","status":"SUSCRIBED","tags":
-[""],"phone_number":"12345678","country_code":"502","first_name":"Jose","last_na
-me":"Perez","full_name":"JosePerez","added_from":"WEB_FORM","custom_field_1":
-"Guatemala","custom_field_2":"","custom_field_3":"","custom_field_4":"","custom_f
-ield_5":""}
+# Respuesta
+
+        Parámetros Tipo Descripción
+        :msisdn Numérico Número de teléfono en formato internacional.
+        Incluye el código de país ( Ejemplo:502123435678)
+        Utilizando HTTP:
+        HTTP/1.1 200 OK
+        Date: Thu, 07 Aug 2014 20:47:07 GMT
+        Connection: Keep-Alive
+        Transfer-Encoding: chunked
+        Content-Type: application/json
+        Utilizando el SDK Java:
+        {"msisdn":"50212345678","status":"SUSCRIBED","tags":
+        [""],"phone_number":"12345678","country_code":"502","first_name":"Jose","last_na
+        me":"Perez","full_name":"JosePerez","added_from":"WEB_FORM","custom_field_1":
+        "Guatemala","custom_field_2":"","custom_field_3":"","custom_field_4":"","custom_f
+        ield_5":""}
+
+
+
 
 # Crear Un Contacto Nuevo
 POST/contacts/:msisdn
 Esta operación se utiliza para crear un contacto nuevo.
 
-SOLICITUD
+Solicitud
 Parámetros :msisdn | Tipo: Numérico | Descripción: Número de teléfono en formato internacional.
 Incluye el código de país (Ejemplo:502123435678)
 
-POST DATA
+Post-Data
 Se debe enviar el JSON correspondiente a un objeto de tipo contacto.
 
-RESPUESTA
+Respuesta
 Si la operación de agregar el contacto se realiza con éxito, se retornará status 200 OK y
 el JSON del objeto tipo contacto. En caso contrario se responderá un status de error.
 
-SOLICITUD
-Utilizando HTTP:
-POST /api/rest/contacts/50212345678 HTTP/1.1
-Accept-Encoding: identity
-Content-Length: 220
-Connection: close
-Date: Thu, 07 Aug 2014 20:47:07 GMT
-Content-Type: application/x-www-form-urlencoded
-Utilizando SDK JAVA:
-String countryCode = "502";
-String msisdn = "50212345678";
-String firstName = "Jose";
-String lastName = "Perez";
-Contacts instance = new Contacts(
-"api key",
-"api secret",
-"http://apps01-tigo-csms.im.local:8101/");
-ApiResponse> result = instance.add(countryCode, msisdn, firstName, lastName);
-if (result.isOk()) {
-ContactJsonObject contact = result.getResponse();
-} else {
-System.out.print("http code: " + result.getHttpCode());
-System.out.print("api code: " + result.getErrorCode());
-System.out.print("description: " + result.getErrorDescription());
-}
+Solicitud
 
-RESPUESTA
-Parámetros Tipo Descripción
-:msisdn Numérico Número de teléfono en formato internacional.
-Incluye el código de país ( Ejemplo:502123435678)
-Utilizando HTTP:
-HTTP/1.1 200 OK
-Date: Thu, 07 Aug 2014 20:47:07 GMT
-Connection: Keep-Alive
-Transfer-Encoding: chunked
-Content-Type: application/json
-Utilizando SDK JAVA:
-Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
-16HwXg46H9WevfnWjre2F21o={"msisdn":"50212345678","phone_number":"1234567
-8","country_code":"502","first_name":"Jose","last_name":"Perez","custom_field_1":
-"Guatemala","custom_field_2":"","custom_field_3":"","custom_field_4":"","custom_f
-ield_5":""}
+    Utilizando HTTP:
+    POST /api/rest/contacts/50212345678 HTTP/1.1
+    Accept-Encoding: identity
+    Content-Length: 220
+    Connection: close
+    Date: Thu, 07 Aug 2014 20:47:07 GMT
+    Content-Type: application/x-www-form-urlencoded
+    Utilizando SDK JAVA:
+    String countryCode = "502";
+    String msisdn = "50212345678";
+    String firstName = "Jose";
+    String lastName = "Perez";
+    Contacts instance = new Contacts(
+    "api key",
+    "api secret",
+    "http://apps01-tigo-csms.im.local:8101/");
+    ApiResponse> result = instance.add(countryCode, msisdn, firstName, lastName);
+    if (result.isOk()) {
+    ContactJsonObject contact = result.getResponse();
+    } else {
+    System.out.print("http code: " + result.getHttpCode());
+    System.out.print("api code: " + result.getErrorCode());
+    System.out.print("description: " + result.getErrorDescription());
+    }
+
+Respuesta : Parámetros Tipo Descripción
+
+    :msisdn Numérico Número de teléfono en formato internacional.
+    Incluye el código de país ( Ejemplo:502123435678)
+    Utilizando HTTP:
+    HTTP/1.1 200 OK
+    Date: Thu, 07 Aug 2014 20:47:07 GMT
+    Connection: Keep-Alive
+    Transfer-Encoding: chunked
+    Content-Type: application/json
+    Utilizando SDK JAVA:
+    Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
+    16HwXg46H9WevfnWjre2F21o={"msisdn":"50212345678","phone_number":"1234567
+    8","country_code":"502","first_name":"Jose","last_name":"Perez","custom_field_1":
+    "Guatemala","custom_field_2":"","custom_field_3":"","custom_field_4":"","custom_f
+    ield_5":""}
 
 
