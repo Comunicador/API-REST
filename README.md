@@ -1037,3 +1037,125 @@ el contacto no pudo ser removido, se retornará un status de error.
 
          Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
          16HwXg46H9WevfnWjre2F2
+
+# Mensajes
+
+La interfaz REST permite hacer envíos de mensajes, ya sea de forma individual o a
+grupos. También es posible hacer consultas sobre los mensajes enviados para fines de
+control o sincronización con otros sistemas.
+
+Nota: Para todos los recursos de la interfaz REST, debe incluirse la firma de
+autenticación.
+
+# Obtiene el Listado de Mensajes Enviados
+GET /messages
+
+Esta operación obtiene el listado de mensajes enviados.
+
+-----> Solicitud
+
+Parámetros:       limit
+Tipo:             Numérico (Opcional)
+Descripción:      Límite de registros a retornar en la consulta. Valor por defecto: 1000. Valor máximo: 1000.
+
+Parámetros:       start
+Tipo:             Numérico (Opcional)
+Descripción:      Parámetro de corrimiento para la cuenta de registros a retornar en la consulta. El valor inicial es cero.
+
+Parámetros:       start_date
+Tipo:             Fecha
+Descripción:      La fecha inicial para la consulta de mensajes. 
+                  La fecha debe ir en formato yyyy-MM-dd HH:mm:ss (Ej. 2014-02-01 00:00:00)
+
+Parámetros:       end_date
+Tipo:             Fecha
+Descripción:      La fecha final para la consulta de mensajes. 
+                  La fecha debe ir en formato yyyy-MM-dd HH:mm:ss (Ej.2014-02-01 00:00:00)
+
+Parámetros:       msisdn
+Tipo:             Texto (Opcional)
+Descripción:      Busca los mensajes enviados exclusivamente al msisdn indicado
+
+Parámetros:       msisdn
+Tipo:             Texto (Opcional)
+Descripción:      Busca los mensajes enviados exclusivamente al msisdn indicado
+
+Parámetros:       group_short_name
+Tipo:             Texto (Opcional)
+Descripción:      Busca los mensajes enviados exclusivamente al grupo indicado
+
+-----> RESPUESTA
+
+La consulta retornará un listado de objetos tipo mensaje. Si no hay resultados para los
+criterios especificados, se retornará una lista vacía.
+
+# Ejemplo de solicitud
+
+-----> Utilizando HTTP:
+
+         GET /api/rest/messages?start_date=2014-02-01 00:00:00&end_date=2014-02-02
+         00:00:00&msisdn=50212345678&limit=10 HTTP/1.1
+         Accept-Encoding: identity
+         Content-Length: 0
+         Connection: close
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Content-Type: application/x-www-form-urlencoded
+         Authorization: IM1d4e705080edec039fe580dd26fd0027:WM/
+         16HwXg46H9WevfnWjre2F2
+         
+-----> Utilizando SDK JAVA:
+
+         Date startDate = formatter.parse("2014-02-01 00:00:00");
+         Date endDate = formatter.parse("2015-02-20 00:00:00");
+         Integer start = 0;
+         Integer limit = 10;
+         String msisdn = "50212345678";
+         Messages instance = new Messages(
+         "api key",
+         "api secret",
+         "http://apps01-tigo-csms.im.local:8101/");
+         ApiResponse<List<MessageJson>> result = instance.getList(startDate, endDate,
+         start, limit, msisdn);
+         if (result.isOk()) {
+         List<MessageJson> list = result.getResponse();
+         } else {
+         System.out.print("http code: " + result.getHttpCode());
+         System.out.print("api code: " + result.getErrorCode());
+         System.out.print("description: " + result.getErrorDescription());
+         }
+         
+-----> Respuesta Utilizando HTTP:
+
+         HTTP/1.1 200 OK
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Connection: Keep-Alive
+         Transfer-Encoding: chunked
+         Content-Type: application/json
+         
+-----> Respuesta Utilizando SDK JAVA:
+
+         [
+         {
+         {api.send_to_contact.short_description}
+         'message_id': 109210,
+         'short_code': '50210000290',
+         'country': '502',
+         'msisdn': '50212345678',
+         'direction': 'MT',
+         'status': 'READY',
+         'message': 'demointeractua2: mensaje de prueba',
+         'total_recipients': 1,
+         'sent_from': 'API_REST',
+         'sent_count': 0,
+         'error_count': 0,
+         'total_monitors': 0,
+         'is_scheduled': False,
+         'is_billable': True,
+         'created_by': 'usuario@dominio.com',
+         'created_on': '2014-02-01 21:52:01',
+         'type': 1
+         },
+         ...
+         ]
+         
+
