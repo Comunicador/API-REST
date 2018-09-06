@@ -105,7 +105,7 @@ Esta operación se utiliza para obtener el listado de contactos asociados a la c
 desea listar los contactos asociados a un grupo deberá referirse a las operaciones de
 grupo.
 
-# Solicitud
+Solicitud
 Parámetros: limit | Tipo: Numérico (Opcional)
 Descripción: Límite de registros a retornar en la consulta. Valor por defecto: 50. Valor máximo: 1000.
 
@@ -121,42 +121,42 @@ Descripción: Filtro para el estado en el que se encuentran los contactos. Posib
 Parámetros: Booleano (Opcional) | Tipo: Texto (Opcional)
 Descripción: Si esta opción es verdadera el retorno de la llamada contendrá una versión resumida de los contactos. Esta versión sólo contiene el teléfono y nombre, dejando fuera los demás campos. Posibles valores: 1 o 0. Valor por defecto: 0.
 
-# Respuesta
+Respuesta
 La consulta retornará un listado de objetos tipo “contactos”. Si no existieran resultados
 para los criterios especificados, se retornará una lista vacía.
 
-# Ejemplo de solicitud
+----->  Ejemplo de solicitud
 
-Utilizando HTTP:
-GET /api/rest/contacts?query=jose&limit=10 HTTP/1.1
-Accept-Encoding: identity
-Content-Length: 0
-Connection: close
-Date: Thu, 07 Aug 2014 20:47:07 GMT
-Content-Type: application/x-www-form-urlencoded
-Authorization: IM1d4e705080edec039fe580dd26fd0027:WM/16HwXg46H9WevfnWjre2F2
+         Utilizando HTTP:
+         GET /api/rest/contacts?query=jose&limit=10 HTTP/1.1
+         Accept-Encoding: identity
+         Content-Length: 0
+         Connection: close
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Content-Type: application/x-www-form-urlencoded
+         Authorization: IM1d4e705080edec039fe580dd26fd0027:WM/16HwXg46H9WevfnWjre2F2
 
-Utilizando JAVA:
-List contactStatuses = null;
-String query = "";
-Integer start = 0;
-Integer limit = 10;
-boolean shortResults = true;
-Contacts instance = new Contacts(
-"api key",
-"api secret",
-"http://apps01-tigo-csms.im.local:8101/");
-ApiResponse> result = instance.getList(contactStatuses, query, start, limit,
-shortResults);
-if (result.isOk()) {
-List list = result.getResponse();
-} else {
-System.out.print("http code: " + result.getHttpCode());
-System.out.print("api code: " + result.getErrorCode());
-System.out.print("description: " + result.getErrorDescription());
-}
+         Utilizando JAVA:
+         List contactStatuses = null;
+         String query = "";
+         Integer start = 0;
+         Integer limit = 10;
+         boolean shortResults = true;
+         Contacts instance = new Contacts(
+         "api key",
+         "api secret",
+         "http://apps01-tigo-csms.im.local:8101/");
+         ApiResponse> result = instance.getList(contactStatuses, query, start, limit,
+         shortResults);
+         if (result.isOk()) {
+         List list = result.getResponse();
+         } else {
+         System.out.print("http code: " + result.getHttpCode());
+         System.out.print("api code: " + result.getErrorCode());
+         System.out.print("description: " + result.getErrorDescription());
+         }
 
-# Respuesta
+----->  Respuesta
 
 Utilizando HTTP:
 
@@ -178,16 +178,16 @@ GET /contacts/:msisdn
 Esta operación se utiliza para obtener directamente un contacto en base al MSISDN
 (Número de teléfono con código internacional de país).
 
-SOLICITUD
+----->  Solicitud
 Parámetros :msisdn | Tipo: Numérico | Descripción: Número de teléfono en formato internacional.
 Incluye el código de país (Ejemplo: 502123435678)
 
-# Respuesta
+----->  Respuesta
 De existir un contacto con el número de teléfono enviado, la consulta retornará un
 objeto de tipo “contacto”. Si no existiera resultado para el contacto enviado se
 retornará un código de error.
 
-# Ejemplo de solicitud Utilizando HTTP:
+----->  Ejemplo de solicitud Utilizando HTTP:
 
         GET /api/rest/contacts/50212345678 HTTP/1.1
         Accept-Encoding: identity
@@ -212,7 +212,7 @@ retornará un código de error.
         System.out.print("description: " + result.getErrorDescription());
         }
 
-# Respuesta
+----->  Respuesta
 
         Parámetros Tipo Descripción
         :msisdn Numérico Número de teléfono en formato internacional.
@@ -237,18 +237,18 @@ retornará un código de error.
 POST/contacts/:msisdn
 Esta operación se utiliza para crear un contacto nuevo.
 
-Solicitud
+----->  Solicitud
 Parámetros :msisdn | Tipo: Numérico | Descripción: Número de teléfono en formato internacional.
 Incluye el código de país (Ejemplo:502123435678)
 
-Post-Data
+----->  Post-Data
 Se debe enviar el JSON correspondiente a un objeto de tipo contacto.
 
-Respuesta
+----->  Respuesta
 Si la operación de agregar el contacto se realiza con éxito, se retornará status 200 OK y
 el JSON del objeto tipo contacto. En caso contrario se responderá un status de error.
 
-Solicitud
+----->  Solicitud
 
     Utilizando HTTP:
     POST /api/rest/contacts/50212345678 HTTP/1.1
@@ -275,7 +275,7 @@ Solicitud
     System.out.print("description: " + result.getErrorDescription());
     }
 
-Respuesta : Parámetros Tipo Descripción
+----->  Respuesta : Parámetros Tipo Descripción
 
     :msisdn Numérico Número de teléfono en formato internacional.
     Incluye el código de país ( Ejemplo:502123435678)
