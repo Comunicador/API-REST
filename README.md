@@ -929,3 +929,111 @@ POST /groups/:short_name/contacts/:msisdn
 
 Esta operación agrega el contacto identificado con el parámetro :msisdn al grupo identificado con el parámetro :short_name
 
+-----> Solicitud Placeholders
+
+Parámetros :short_name
+Tipo: Texto
+Descripción: El nombre corto asignado al grupo
+
+Parámetros :msisdn
+Tipo: Númerico
+Descripción: Número de teléfono incluyendo el código internacional de país.
+
+-----> Respuesta 
+
+Si la operación de asociación del contacto fue elaborada de forma exitosa se retornará status 200 OK. Si el contacto no pudo ser asociado, se retornará un status de error.
+
+# Ejemplo de solicitud
+
+-----> Utilizando HTTP:
+
+         POST /api/rest/grupos/ventas/contacts/50212345678 HTTP/1.1
+         Accept-Encoding: identity
+         Content-Length: 0
+         Connection: close
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Content-Type: application/x-www-form-urlencoded
+
+-----> Utilizando SKD JAVA:
+
+         String shortName = "ventas";
+         String msisdn = "50212345678";
+         Groups instance = new Groups(
+         "api key",
+         "api secret",
+         "http://apps01-tigo-csms.im.local:8101/");
+         ApiResponse result = instance.addContact(shortName, msisdn);
+         if (result.isOk()) {
+         // Agregado con exito
+         } else {
+         System.out.print("http code: " + result.getHttpCode());
+         System.out.print("api code: " + result.getErrorCode());
+         System.out.print("description: " + result.getErrorDescription());
+         }
+         
+-----> Respuesta Utilizando HTTP:
+
+         HTTP/1.1 200 OK
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Connection: Keep-Alive
+         Transfer-Encoding: chunked
+         Content-Type: application/json
+
+-----> Respuesta Utilizando SDK JAVA:
+
+         Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
+         16HwXg46H9WevfnWjre2F2
+         
+         
+# Remueve un Contacto de un Grupo
+DELETE /groups/:short_name/contacts/:msisdn
+
+Esta operación remueve un contacto asociado a un grupo
+Parámetros :short_name | Tipo: Texto | Descripción: El nombre corto asignado al grupo
+Parámetros :msisdn | Tipo: Númerico | Número de teléfono incluyendo el código internacional de país.
+
+-----> Respuesta 
+
+Si la operación de borrado fue realizada de forma exitosa se retornará status 200 OK. Si
+el contacto no pudo ser removido, se retornará un status de error.
+
+# Ejemplo de solicitud
+
+-----> Utilizando HTTP:
+
+         DELETE /api/rest/groups/ventas/contacts/50212345678 HTTP/1.1
+         Accept-Encoding: identity
+         Content-Length: 0
+         Connection: close
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Content-Type: application/x-www-form-urlencoded
+
+-----> Utilizando SDK JAVA:
+
+         String shortName = "ventas";
+         String msisdn = "50212345678";
+         Groups instance = new Groups(
+         "api key",
+         "api secret",
+         "http://apps01-tigo-csms.im.local:8101/");
+         ApiResponse result = instance.removeContact(shortName, msisdn);
+         if (result.isOk()) {
+         // Agregado con exito
+         } else {
+         System.out.print("http code: " + result.getHttpCode());
+         System.out.print("api code: " + result.getErrorCode());
+         System.out.print("description: " + result.getErrorDescription());
+         }
+
+-----> Respuesta Utilizando HTTP:
+
+         HTTP/1.1 200 OK
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Connection: Keep-Alive
+         Transfer-Encoding: chunked
+         Content-Type: application/json
+
+-----> Respuesta Utilizando SDK JAVA:
+
+         Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
+         16HwXg46H9WevfnWjre2F2
