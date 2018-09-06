@@ -586,3 +586,75 @@ criterios especificados, se retornará una lista vacía.
          16HwXg46H9WevfnWjre2F2
          [{ short_name: 'ventas', name: 'Ventas', description: 'Grupo de Ventas', members:
          { total: 5, pending: 1, confirmed: 4} }]
+
+
+# Crea un Grupo Nuevo
+POST /groups/:short_name
+
+Esta operación crea un grupo de contactos nuevo.
+
+-----> Solicitud
+
+Parámetros :short_name
+Tipo: Texto
+Descripción: El nombre corto asignado al grupo
+
+-----> Post-Data
+
+Se debe enviar el JSON correspondiente a un objeto tipo grupo.
+
+-----> Respuesta
+
+Si la operación de creación es finalizada con éxito se retornará status 200 OK y el JSON
+del objeto de tipo grupo. En caso contrario se responderá con status de error.
+
+# Ejemplo de solicitud
+
+-----> Utilizando HTTP:
+
+         POST /api/rest/groups/ventas HTTP/1.1
+         Accept-Encoding: identity
+         Content-Length: 220
+         Connection: close
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Content-Type: application/x-www-form-urlencoded
+
+-----> Utilizando SKD JAVA:
+
+         String shortName = "ventas";
+         String name = "Ventas";
+         String description = "Grupo de Ventas";
+         Groups instance = new Groups(
+         "api key",
+         "api secret",
+         "http://apps01-tigo-csms.im.local:8101/");
+         ApiResponse<GroupJsonObject> result = instance.add(shortName, name,
+         description);
+         if (result.isOk()) {
+         GroupJsonObject group = result.getResponse();
+         } else {
+         System.out.print("http code: " + result.getHttpCode());
+         System.out.print("api code: " + result.getErrorCode());
+         System.out.print("description: " + result.getErrorDescription());
+         }
+         
+
+-----> RESPUESTA
+
+Parámetros Tipo Descripción
+:short_name Texto El nombre corto asignado al grupo
+
+-----> Utilizando HTTP:
+
+         HTTP/1.1 200 OK
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Connection: Keep-Alive
+         Transfer-Encoding: chunked
+         Content-Type: application/json
+
+-----> Utilizando SDK Java:
+
+         Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
+         16HwXg46H9WevfnWjre2F2
+         { short_name: 'ventas', name: 'Ventas', description: 'Grupo de Ventas', members: {
+         total: 0, pending: 0, confirmed: 0} }
