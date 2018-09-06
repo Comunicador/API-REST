@@ -641,9 +641,7 @@ del objeto de tipo grupo. En caso contrario se responderá con status de error.
 
 -----> RESPUESTA
 
-Parámetros : short_name 
-Tipo       : Texto 
-Descripción: El nombre corto asignado al grupo
+Parámetros : short_name  | Tipo : Texto | Descripción: El nombre corto asignado al grupo
 
 -----> Utilizando HTTP:
 
