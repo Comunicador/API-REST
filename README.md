@@ -1159,3 +1159,183 @@ criterios especificados, se retornará una lista vacía.
          ]
          
 
+# Envío de Mensajes Individuales
+GET /messages/send_to_contact
+
+Envío de mensajes individuales
+
+-----> Solicitud
+
+Parámetros:       msidsn
+Tipo:             Numérico
+Descripción:      Número de teléfono incluyendo el código internacional de país.
+
+Parámetros:       message
+Tipo:             Texto
+Descripción:      El contenido del mensaje a enviar
+
+Parámetros:       id
+Tipo:             Numérico (Opcional)
+Descripción:      Se puede enviar este valor como un ID único de mensaje. Este valor sirve para evitar envíos duplicados
+                  de mensajes al realizar reintentos. Cualquier mensaje que lleve el mismo ID dentro de una ventana de 2                       horas será rechazado por duplicidad. Si no se envía este campo, la validación de duplicación se realiza                       sobre el destinatario + mensaje
+
+-----> Respuesta 
+
+Si el envío del mensaje se realiza de forma exitosa, se retornará status 200 Ok y el
+objeto de mensaje generado. En caso contrario retornará el status de error
+correspondiente.
+
+# Ejemplo de solicitud
+
+-----> Utilizando HTTP:
+
+         POST /api/rest/messages/send_to_contact HTTP/1.1
+         Accept-Encoding: identity
+         Content-Length: 0
+         Connection: close
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Content-Type: application/x-www-form-urlencoded
+         
+-----> Utilizando SDK JAVA:
+
+         {
+         'message_id': 109210,
+         'short_code': '50210000290',
+         'country': '502',
+         'msisdn': '50212345678',
+         'direction': 'MT',
+         11/29/2016 Tigo SMS toolkit
+         https://smscorporativo.tigo.com.gt/docs/api/rest/messages 3/4
+         {api.send_to_groups.short_description}
+         'status': 'READY',
+         'message': 'demointeractua2: mensaje de prueba',
+         'total_recipients': 1,
+         'sent_from': 'API_REST',
+         'sent_count': 0,
+         'error_count': 0,
+         'total_monitors': 0,
+         'is_scheduled': False,
+         'is_billable': True,
+         'created_by': 'usuario@dominio.com',
+         'created_on': '2014-08-06 21:52:01',
+         'type': 1
+         }
+         String msisdn = "50212345678";
+         String message = "mensaje de prueba";
+         String messageId = "123";
+         Messages instance = new Messages(
+         "api key",
+         "api secret",
+         "http://apps01-tigo-csms.im.local:8101/");
+         ApiResponse<MessageJson> result = instance.sendToContact(msisdn, message,
+         messageId);
+         if (result.isOk()) {
+         MessageJson message = result.getResponse();
+         } else {
+         System.out.print("http code: " + result.getHttpCode());
+         System.out.print("api code: " + result.getErrorCode());
+         System.out.print("description: " + result.getErrorDescription());
+         }
+         
+-----> Respuesta Utilizando HTTP: 
+
+         HTTP/1.1 200 OK
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Connection: Keep-Alive
+         Transfer-Encoding: chunked
+         Content-Type: application/json
+         
+-----> Respuesta Utilizando SDK JAVA:
+
+         Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
+         16HwXg46H9WevfnWjre2F2
+         { "msisdn":"50212345678", "message":"mensaje de prueba", "id":"123" }
+
+# Envío de Mensajes a Grupos
+POST /messages/send
+
+-----> Solicitud Post-Data
+
+Parámetros:       groups
+Tipo:             Texto
+Descripción:      Es un listado de los grupos a los que hace el envío separados por coma. 
+                  Por ejemplo: ventas, mercadeo, gerencia.
+                  
+Parámetros:       message
+Tipo:             Texto
+Descripción:      El contenido del mensaje a enviar
+
+Parámetros:       id
+Tipo:             Numérico (Opcional)
+Descripción:      Se puede enviar este valor como un ID único de mensaje. Este valor sirve para evitar envíos duplicados
+                  de mensajes al realizar reintentos. Cualquier mensaje que lleve el mismo ID dentro de una ventana de 2                       horas será rechazado por duplicidad. Si no se envía este campo, la validación de duplicación se realiza                       sobre el destinatario + mensaje
+
+-----> Respuesta
+
+Si el envío del mensaje es exitoso, se retornará status 200 Ok y el objeto de mensaje
+generado. En caso contrario retornará el status de error correspondiente.
+
+# Ejemplo de solicitud
+
+-----> Utilizando HTTP:
+
+         POST /api/rest/messages/send HTTP/1.1
+         Accept-Encoding: identity
+         Content-Length: 220
+         Connection: close
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Content-Type: application/x-www-form-urlencoded
+
+-----> Utilizando HTTP:
+
+         {
+         "message_id":109212,
+         "short_code":"50210000290",
+         "groups":[
+         "staff",
+         "ventas"
+         ],
+         "direction":"MT",
+         "status":"PENDING",
+         "message":"demointeractua2: mensaje a grupos",
+         "total_recipients":21,
+         "sent_from":"API_HTTP",
+         "sent_count":0,
+         "error_count":0,
+         "total_monitors":0,
+         "is_scheduled":false,
+         "is_billable":true,
+         "created_by":"usuario@dominio.com",
+         "created_on":"2014-08-06 21:56:41",
+         "type":1
+         }
+         String[] shortNames = new String[] {"ventas","staff"};
+         String message = "mensaje a grupos";
+         String messageId = "123";
+         Messages instance = new Messages(
+         "api key",
+         "api secret",
+         "http://apps01-tigo-csms.im.local:8101/");
+         ApiResponse<MessageJson> result = instance.sendToGroups(shortNames,
+         message);
+         if (result.isOk()) {
+         MessageJson message = result.getResponse();
+         } else {
+         System.out.print("http code: " + result.getHttpCode());
+         System.out.print("api code: " + result.getErrorCode());
+         System.out.print("description: " + result.getErrorDescription());
+         }
+         
+-----> Respuesta Utilizando HTTP: 
+
+         HTTP/1.1 200 OK
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Connection: Keep-Alive
+         Transfer-Encoding: chunked
+         Content-Type: application/json
+         
+-----> Respuesta Utilizando SDK JAVA:
+
+         Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
+         16HwXg46H9WevfnWjre2F2
+         { "groups":["ventas","staff"], "message":"mensaje de prueba", "id":"123" }
