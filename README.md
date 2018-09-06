@@ -362,9 +362,7 @@ error.
          System.out.print("api code: " + result.getErrorCode());
          System.out.print("description: " + result.getErrorDescription()); }
 
------> Respuesta
-
------> Utilizando HTTP:
+-----> Respuesta Utilizando HTTP:
 
          HTTP/1.1 200 OK
          Date: Thu, 07 Aug 2014 20:47:07 GMT
@@ -372,11 +370,219 @@ error.
          Transfer-Encoding: chunked
          Content-Type: application/json
 
------> Utilizando el SDK JAVA:
+-----> Respuesta Utilizando el SDK JAVA:
 
          Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
          16HwXg46H9WevfnWjre2F21o={"msisdn":"50212345678","phone_number":"1234567
          8","country_code":"502","first_name":"Jose","last_name":"Perez","custom_field_1":
          "Guatemala","custom_field_2":"","custom_field_3":"","custom_field_4":"","custom_f
          ield_5":""}
+         
+         
+# Elimina Un Contacto
+DELETE /contacts/:msisdn
 
+Esta operación se utiliza para dar de baja un contacto existente. El contacto se
+identifica con el :MSISDN (Número de teléfono con código internacional de país).
+
+-----> Solicitud
+
+Parámetros :msisdn | Tipo: Numérico | Descripción: Número de teléfono en formato internacional.
+Incluye el código de país (Ejemplo: 502123435678)
+
+-----> Respuesta
+
+Si la operación de eliminación es realizada de forma exitosa, se retornará status 200 OK
+y el JSON del objeto tipo contacto. En caso contrario se responderá con status de error.
+
+# Ejemplo de solicitud
+
+-----> Utilizando HTTP:
+
+         DELETE /api/rest/contacts/50212345678 HTTP/1.1
+         Accept-Encoding: identity
+         Content-Length: 0
+         Connection: close
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Content-Type: application/x-www-form-urlencoded
+         
+-----> Utilizando SDK JAVA:
+
+         String msisdn = "50212345678";
+         Contacts instance = new Contacts(
+         "api key",
+         "api secret",
+         "http://apps01-tigo-csms.im.local:8101/");
+         ApiResponse> result = instance.delete(msisdn);
+         if (result.isOk()) {
+         ContactJsonObject contact = result.getResponse();
+         } else {
+         System.out.print("http code: " + result.getHttpCode());
+         System.out.print("api code: " + result.getErrorCode());
+         System.out.print("description: " + result.getErrorDescription());
+         }
+         
+-----> Respuesta Utilizando HTTP:
+
+         HTTP/1.1 200 OK
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Connection: Keep-Alive
+         Transfer-Encoding: chunked
+         Content-Type: application/json
+
+-----> Respuesta Utilizando SDK JAVA
+
+         Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
+         16HwXg46H9WevfnWjre2F2
+         
+         
+# Obtiene el Listado de Grupos de un Contacto
+GET /contacts/:msisdn/groups
+
+Esta operación se utiliza para obtener el listado de grupos a los que pertenece un
+contacto
+
+-----> Solicitud
+
+Parámetros :msisdn | Tipo: Numérico | Descripción: Número de teléfono en formato internacional.
+Incluye el código de país (Ejemplo: 502123435678)
+
+-----> Respuesta
+
+La consulta retornará un arreglo de objetos tipo Grupo. Si el contacto no tiene grupos
+asociados, se retornará un arreglo vacío.
+
+# Ejemplo de solicitud
+
+-----> Utilizando HTTP:
+
+         GET /api/rest/contacts/50212345678/groups HTTP/1.1
+         Accept-Encoding: identity
+         Content-Length: 0
+         Connection: close
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Content-Type: application/x-www-form-urlencoded
+
+-----> Utilizando SDK JAVA:
+
+         String msisdn = "50212345678";
+         Contacts instance = new Contacts(
+         "api key",
+         "api secret",
+         "http://apps01-tigo-csms.im.local:8101/");
+         ApiResponse> result = instance.getGroupList(msisdn);
+         if (result.isOk()) {
+         List list = result.getResponse();
+         } else {
+         System.out.print("http code: " + result.getHttpCode());
+         System.out.print("api code: " + result.getErrorCode());
+         System.out.print("description: " + result.getErrorDescription());
+         }
+
+-----> Respuesta
+
+Parámetros Tipo Descripción
+:msisdn Numérico Número de teléfono en formato internacional.
+Incluye el código de país (Ejemplo:502123435678)
+
+-----> Utilizando HTTP
+
+         HTTP/1.1 200 OK
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Connection: Keep-Alive
+         Transfer-Encoding: chunked
+         Content-Type: application/json
+
+-----> Utilizando SDK JAVA
+
+         Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
+         16HwXg46H9WevfnWjre2F2
+         [
+         { short_name: 'ventas', name: 'Ventas', description: 'Grupo de Ventas', members: {
+         total: 5, pending: 1, confirmed: 4} },
+         ...
+         ]
+
+# Grupos
+
+La interfaz REST permite la administración de grupos de contactos de manera remota,
+permitiendo organizar sus contactos de forma eficiente para facilitar los envíos de
+mensajes. Se pueden agregar, modificar, eliminar y listar los grupos de contactos de la
+cuenta.
+
+Nota: Para todos los recursos de la interfaz REST, debe incluirse la firma de
+autenticación.
+
+# Obtiene El Listado de Grupos
+GET /groups
+
+Esta operación se utiliza para obtener el listado de grupos de contactos de la cuenta.
+
+-----> Solicitud
+
+Parámetros: limit
+Tipo: Numérico (Opcional)
+Descripción: Límite de registros a retornar en la consulta. Valor por defecto: 50. Valor máximo: 1000.
+
+Parámetros: start
+Tipo: Numérico (Opcional)
+Descripción: Parámetro de corrimiento para la cuenta de registros a retornar en la consulta. El valor inicial es cero.
+
+Parámetros: Query
+Tipo: Texto (Opcional)
+Descripción: Filtro general para la búsqueda. La consulta retornará cualquier registro que cuente con este valor en el nombre o nombre corto
+
+Parámetros: shortResults
+Tipo: Booleano (Opcional)
+Descripción: Si esta opción es verdadera el retorno de la llamada contendrá una versión resumida de los contactos. Esta versión sólo contiene el teléfono y nombre, dejando fuera los demás campos. Posibles valores: 1 o 0. Valor por defecto: 0.
+
+-----> Respuesta
+
+La consulta retornará un listado de objetos tipo grupo. Si no existen resultados para los
+criterios especificados, se retornará una lista vacía.
+
+# Ejemplo de solicitud
+
+-----> Utilizando HTTP:
+
+         GET /api/rest/groups?query=ventas&limit=10 HTTP/1.1
+         Accept-Encoding: identity
+         Content-Length: 0
+         Connection: close
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Content-Type: application/x-www-form-urlencoded
+
+-----> Utilizando SDK JAVA:
+
+         String query = "";
+         Integer start = 0;
+         Integer limit = 10;
+         boolean shortResults = false;
+         Groups instance = new Groups(
+         "api key",
+         "api secret",
+         "http://apps01-tigo-csms.im.local:8101/");
+         ApiResponse<List<GroupJsonObject>> result = instance.getList(query, start,
+         limit, shortResults);
+         if (result.isOk()) {
+         List<GroupJsonObject> list = result.getResponse();
+         } else {
+         System.out.print("http code: " + result.getHttpCode());
+         System.out.print("api code: " + result.getErrorCode());
+         System.out.print("description: " + result.getErrorDescription());
+         }
+
+-----> Respuesta Utilizando HTTP:
+
+         HTTP/1.1 200 OK
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Connection: Keep-Alive
+         Transfer-Encoding: chunked
+         Content-Type: application/json
+
+-----> Utilizando SDK JAVA:
+
+         Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
+         16HwXg46H9WevfnWjre2F2
+         [{ short_name: 'ventas', name: 'Ventas', description: 'Grupo de Ventas', members:
+         { total: 5, pending: 1, confirmed: 4} }]
