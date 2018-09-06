@@ -307,5 +307,76 @@ el JSON del objeto tipo contacto. En caso contrario se responderá un status de 
     8","country_code":"502","first_name":"Jose","last_name":"Perez","custom_field_1":
     "Guatemala","custom_field_2":"","custom_field_3":"","custom_field_4":"","custom_f
     ield_5":""}
+    
+    
+   # Actualiza un contacto
+PUT /contacts/:msisdn
+   
+Esta operación se utiliza para actualizar un contacto existente. El contacto se identifica
+con el :MSISDN (Número de teléfono con código internacional de país).
 
+-----> Solicitud
+
+Parámetros :msisdn | Tipo: Numérico | Descripción: Número de teléfono en formato internacional.
+Incluye el código de país (Ejemplo:502123435678)
+
+-----> Post-Data
+
+Se debe enviar el JSON correspondiente a un objeto de tipo contacto.
+
+-----> Respuesta
+
+Si la operación de actualización es realizada de forma exitosa, se retornará status 200
+OK y el JSON del objeto tipo contacto. En caso contrario se responderá un status de
+error.
+
+# Ejemplo de solicitud
+
+-----> Utilizando HTTP:
+         
+         
+         PUT /api/rest/contacts/50212345678 HTTP/1.1
+         Accept-Encoding: identity
+         Content-Length: 220
+         Connection: close
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Content-Type: application/x-www-form-urlencoded
+         
+         
+-----> Utilizando SDK JAVA:
+         
+         String countryCode = "502";
+         String msisdn = "50212345678";
+         String firstName = "Jose";
+         String lastName = "Perez";
+         Contacts instance = new Contacts(
+         "api key",
+         "api secret",
+         "http://apps01-tigo-csms.im.local:8101/");
+         ApiResponse> result = instance.update(countryCode, msisdn, firstName,
+         lastName);
+         if (result.isOk()) {
+         ContactJsonObject contact = result.getResponse();
+         } else {
+         System.out.print("http code: " + result.getHttpCode());
+         System.out.print("api code: " + result.getErrorCode());
+         System.out.print("description: " + result.getErrorDescription()); }
+
+-----> Respuesta
+
+-----> Utilizando HTTP:
+
+         HTTP/1.1 200 OK
+         Date: Thu, 07 Aug 2014 20:47:07 GMT
+         Connection: Keep-Alive
+         Transfer-Encoding: chunked
+         Content-Type: application/json
+
+-----> Utilizando el SDK JAVA:
+
+         Authorization:IM1d4e705080edec039fe580dd26fd0027:WM/
+         16HwXg46H9WevfnWjre2F21o={"msisdn":"50212345678","phone_number":"1234567
+         8","country_code":"502","first_name":"Jose","last_name":"Perez","custom_field_1":
+         "Guatemala","custom_field_2":"","custom_field_3":"","custom_field_4":"","custom_f
+         ield_5":""}
 
